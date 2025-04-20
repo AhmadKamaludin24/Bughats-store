@@ -1,9 +1,10 @@
 import React from 'react'
+import Image from 'next/image'
 
 const Icon = ({props} : {props: boolean}) => {
   return (
-    <div>
-        {props ? <img src="/icons/approved.png" width={"30px"} alt='icon'/> : <img src="/icons/rejected.png" width={"30px"} alt='icon'/>}
+    <div className='relative w-20 h-20 sm:w-32 sm:h-32 mb-5 '>
+        {props ? <Image fill src="/icons/approved.png" alt='icon'/> : <Image fill src="/icons/rejected.png" alt='icon'/>}
       
     </div>
   )
