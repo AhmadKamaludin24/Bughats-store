@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { Button } from '../ui/button'
 
 import { formatCurrency } from '@/lib/FormatCurrency'
-import { Input } from '../ui/input'
+
 
 
 const CheckoutPage = ({amount, email, username, productId} : {amount: number, email:string, username: string, productId: string[]}) => {
@@ -35,7 +35,7 @@ const CheckoutPage = ({amount, email, username, productId} : {amount: number, em
             }
             fetchClientSecret()
         }
-    },[amount])
+    },[amount, email, productId, username])
 
   
 
@@ -66,7 +66,11 @@ const CheckoutPage = ({amount, email, username, productId} : {amount: number, em
         }
         setLoading(false)
        } catch (error) {
-        setError('Something went wrong')
+        if (error instanceof Error) {
+            setError(error.message)
+        } else {
+            setError('Something went wrong')
+        }
        } finally{
         setLoading(false)
        }

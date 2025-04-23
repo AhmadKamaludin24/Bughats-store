@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const resend = new Resend(process.env.RESEND_API_KEY!); // pastikan ENV VAR benar
 
 export async function POST(request: NextRequest) {
-  const { paymentIntentId } = await request.json();
+  const { paymentIntentId } : {paymentIntentId: string} = await request.json();
 
   try {
     const pi = await stripe.paymentIntents.retrieve(paymentIntentId);
@@ -64,11 +64,21 @@ export async function POST(request: NextRequest) {
       status: true,
       message: "Payment successful & email sent",
     });
-  } catch (error: any) {
-    console.error("[send-email]", error);
-    return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
-      { status: 500 }
-    );
+  } catch (error) {
+    if (error instanceof Error) {
+      // Jika `error` adalah instance dari `Error`
+      console.error("[send-email]", error.message);
+      return NextResponse.json(
+        { error: error.message || "Internal Server Error" },
+        { status: 500 }
+      );
+    } else {
+      // Jika error bukan `Error`, misalnya bisa berupa string atau tipe lainnya
+      console.error("[send-email] Unknown error", error);
+      return NextResponse.json(
+        { error: "Internal Server Error" },
+        { status: 500 }
+      );
+    }
   }
 }

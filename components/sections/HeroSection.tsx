@@ -1,5 +1,5 @@
 "use client"
-import React, { Suspense } from 'react'
+import React from 'react'
 
 import { Input } from '../ui/input'
 import SkeletonCardsProduct from '../skeleton/CardsProducts'
@@ -8,8 +8,7 @@ import CardsProducts from '../cards/CardsProducts'
 import { redirect } from 'next/navigation'
 import { useEffect } from 'react'
 import { ProductTypes } from '@/types/ProductTypes'
-import { Search } from 'lucide-react'
-import { encode } from 'punycode'
+
 
 
 const HeroSection = () => {

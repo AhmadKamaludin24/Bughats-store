@@ -1,11 +1,11 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { Suspense, useState } from 'react'
+import {  useState } from 'react'
 import { Button } from '../ui/button'
 
 import Image from 'next/image'
-import { CardProductProps, ProductTypes } from '@/types/ProductTypes'
+import { CardProductProps} from '@/types/ProductTypes'
 import { formatCurrency } from '@/lib/FormatCurrency'
 
 const Display3d = dynamic(() => import('../three/Display3d'), {

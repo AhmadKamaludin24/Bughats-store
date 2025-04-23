@@ -44,7 +44,7 @@ const Page = () => {
     }
   
     checkStatus()
-  }, [])
+  }, [amount, paymentIntentId])
   
    
   return (

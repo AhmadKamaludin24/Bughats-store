@@ -8,10 +8,9 @@ import { Input } from '@/components/ui/input'
 import React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
-import CheckoutPage from '@/components/cards/CheckoutPage'
 import ConvertToSubCurrency from '@/lib/ConvertToSubCurency'
 import { Button } from '@/components/ui/button'
-import { redirect, useRouter } from 'next/navigation'
+import {  useRouter } from 'next/navigation'
 import { formatCurrency } from '@/lib/FormatCurrency'
 
 
@@ -54,7 +53,7 @@ const Page = () => {
           </div>
          
           
-  e
+  
           <div className="flex flex-col border-2 w-full max-h-fit text-black pb-12 px-3 bg-white rounded-2xl">
             <h1 className='text-2xl text-center p-7'>Total: {formatCurrency(totalPrice())}</h1>
             <Elements stripe={stripePromise} options={{

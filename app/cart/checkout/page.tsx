@@ -13,7 +13,6 @@ const Page = () => {
   const amount = Number(useSearchParams().get('amount'))
   const email = useSearchParams().get('email')
   const username = useSearchParams().get('username')
-  const cart = useCartStore((state) => state.cart)
   const uuid = useCartStore.getState().cart.map((item) => item.uuid)
   console.log(uuid)
   useEffect(() => {
@@ -23,7 +22,7 @@ const Page = () => {
     if (amount <= 0) {
       window.location.href = '/cart'
     }
-  },[])
+  },[email, username, amount])
    
   return (
     <div className='w-full min-h-screen bg-card-foreground relative '>
