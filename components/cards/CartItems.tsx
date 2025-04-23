@@ -5,7 +5,7 @@ import { useCartStore } from '@/lib/store/CartStore'
 import { redirect } from 'next/navigation'
 import Image from 'next/image'
 
-const CartItems = ({id, name, description, price, slug, image, } : {id: number,name: string, description: string, price: number, slug: string,image: string, onClick?: ()=> void}) => {
+const CartItems = ({id, name, description, price, slug, image } : {id: number,name: string, description: string, price: string, slug: string,image: string ,onClick?: ()=> void}) => {
   const {removeItem} = useCartStore((state) => state)
   const handleRemove = () => {
     removeItem(id)
@@ -20,7 +20,8 @@ const CartItems = ({id, name, description, price, slug, image, } : {id: number,n
         <div className="text-white pl-5 ">
             <h1 className='text-3xl max-sm:text-2xl line-clamp-2'>{name}</h1>
             <p className='text-gray-400 max-sm:text-[10px] line-clamp-3'>{description}</p>
-            <p className='text-lg'>Price: <span className='text-green-700'>${price}</span></p>
+            <p className='text-lg'>Price: <span className='text-green-700'>{price}</span></p>
+            
          
         </div>
     </div>

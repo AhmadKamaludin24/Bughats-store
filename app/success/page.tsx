@@ -3,11 +3,10 @@ import { Loader } from '@/components/cards/CardsProducts'
 import Icon from '@/components/icons/icon'
 import { Spotlight } from '@/components/ui/aceternity/spotlight-new'
 import { formatCurrency } from '@/lib/FormatCurrency'
-import { stat } from 'fs'
 import {  useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import React from 'react'
-import { set } from 'zod'
+
 
 const Page = () => {
    const amount = useSearchParams().get('amount')

@@ -4,11 +4,13 @@ import { persist } from 'zustand/middleware'
 
 type item = {
   id: number;
+  uuid: string;
   name: string;
   description: string;
   slug: string;
   image: string;
   price: number;
+
 };
 
 type CartStore = {
@@ -27,11 +29,14 @@ export const useCartStore = create<CartStore>()(
       nextId: 1,
       addToCart: (item) => {
         const currentId = get().nextId;
-        const newItem = { ...item, id: currentId };
-        set({
-          cart: [...get().cart, newItem],
-          nextId: currentId + 1,
-        });
+        const isAlreadyInCart = get().cart.some(i => i.uuid === item.uuid); // true/false
+        if (!isAlreadyInCart) {
+          const newItem = { ...item, id: currentId, qty: 1 };
+          set({
+            cart: [...get().cart, newItem],
+            nextId: currentId + 1,
+          });
+        }
       },
       clearCart: () => set({ cart: [], nextId: 1 }),
       removeItem: (id) => set({ cart: get().cart.filter(i => i.id !== id) }),

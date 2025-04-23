@@ -7,7 +7,7 @@ import { formatCurrency } from '@/lib/FormatCurrency'
 import { Input } from '../ui/input'
 
 
-const CheckoutPage = ({amount, email, username} : {amount: number, email:string, username: string}) => {
+const CheckoutPage = ({amount, email, username, productId} : {amount: number, email:string, username: string, productId: string[]}) => {
     const stripe = useStripe()
     const elements = useElements()
     const [clientSecret, setClientSecret] = React.useState('')
@@ -26,7 +26,8 @@ const CheckoutPage = ({amount, email, username} : {amount: number, email:string,
                     body: JSON.stringify({
                         amount,
                         email,
-                        username                     
+                        username,
+                        productId                     
                     }),
                 })
                 const data = await response.json()

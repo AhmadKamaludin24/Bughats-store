@@ -45,24 +45,24 @@ const Page = () => {
     <div className='w-full min-h-screen bg-card-foreground relative '>
       <Navbar />
       {cart.length > 0 ? (
-          <div className='pt-24 max-w-7xl relative mx-auto gap-3 flex max-sm:flex-col px-3 '>
+          <div className='pt-24 max-w-7xl relative mx-auto gap-3 flex max-[1000px]:flex-col px-3 '>
           <div className="flex flex-col gap-3">
             {cart.map((item, index)=>(
-              <CartItems key={index} id={item.id} name={item.name} description={item.description} image={item.image} price={item.price} slug={item.slug}/> 
+              <CartItems key={index} id={item.id} name={item.name} description={item.description} image={item.image} price={`${formatCurrency(item.price)}`} slug={item.slug} /> 
             ))}
                  
           </div>
          
           
   e
-          <div className="flex flex-col border-2 w-full h-auto text-black pb-12 px-3 bg-white rounded-2xl">
+          <div className="flex flex-col border-2 w-full max-h-fit text-black pb-12 px-3 bg-white rounded-2xl">
             <h1 className='text-2xl text-center p-7'>Total: {formatCurrency(totalPrice())}</h1>
             <Elements stripe={stripePromise} options={{
               mode: 'payment',
               amount: ConvertToSubCurrency(totalPrice()),
               currency: 'usd',
             }}>
-               <div className="flex flex-col w-full gap-2 mb-3">
+          <div className="flex flex-col w-full gap-2 mb-3">
             <label htmlFor="username" className='text-sm'>Username</label>
             <Input name='username' placeholder='Enter Your Name' value={username} onChange={(e)=> setUsername(e.target.value)} className={`${error ? "border-2 border-red-400" : ""}`} />
           </div>

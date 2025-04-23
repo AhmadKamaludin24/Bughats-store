@@ -5,8 +5,8 @@ import { NextResponse, NextRequest } from 'next/server'
 
 export async function POST(request: NextRequest) {
     try {
-        const {amount, email, username} = await request.json()
-        console.log(amount, email, username)
+        const {amount, email, username, productId} = await request.json()
+        console.log(amount, email, username, productId)
 
         const paymentIntent = await stripe.paymentIntents.create({
             amount: amount,
@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
             metadata: {
                 email: email,
                 username: username,
+                productId: Array.isArray(productId) ? JSON.stringify(productId) : String(productId),
             }
         })
         return NextResponse.json({ clientSecret: paymentIntent.client_secret })

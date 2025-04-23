@@ -6,6 +6,7 @@ import { Button } from '../ui/button'
 
 import Image from 'next/image'
 import { CardProductProps, ProductTypes } from '@/types/ProductTypes'
+import { formatCurrency } from '@/lib/FormatCurrency'
 
 const Display3d = dynamic(() => import('../three/Display3d'), {
   ssr: false,
@@ -63,7 +64,7 @@ export default function CardsProducts({ model, name, price, description, imageUr
       </div>
 
        <div className='flex  w-full h-full items-end justify-between p-2'>
-        <p className="font-bold text-[15px] text-green-800">${price}</p>
+        <p className="font-bold text-[15px] text-green-800">{formatCurrency(price)}</p>
         <Button variant="outline" className="text-black mt-2 " onClick={onClick}>Add to Cart</Button>
 
        </div>

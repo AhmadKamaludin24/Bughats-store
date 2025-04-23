@@ -6,13 +6,16 @@ import ConvertToSubCurrency from '@/lib/ConvertToSubCurency'
 import { useSearchParams } from 'next/navigation'
 import CheckoutPage from '@/components/cards/CheckoutPage'
 import { formatCurrency } from '@/lib/FormatCurrency'
+import { useCartStore } from '@/lib/store/CartStore'
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 const Page = () => {
   const amount = Number(useSearchParams().get('amount'))
   const email = useSearchParams().get('email')
   const username = useSearchParams().get('username')
-
+  const cart = useCartStore((state) => state.cart)
+  const uuid = useCartStore.getState().cart.map((item) => item.uuid)
+  console.log(uuid)
   useEffect(() => {
     if (!email || !username) {
       window.location.href = '/cart'
@@ -32,7 +35,7 @@ const Page = () => {
             amount: ConvertToSubCurrency(amount),
             currency: 'usd',
           }}>
-            <CheckoutPage amount={amount} email={email!} username={username!}/>
+            <CheckoutPage amount={amount} email={email!} username={username!} productId={uuid} />
           </Elements>
         </div>
       </div>

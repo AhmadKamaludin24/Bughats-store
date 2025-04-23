@@ -10,7 +10,7 @@ const Navbar = () => {
     <div className='fixed top-0 z-50 left-0 w-full py-5 bg-card-foreground'>
       <div className="max-w-7xl mx-auto flex items-center justify-between px-5">
         <Link href={"/"}>
-          <div className='text-white font-bold text-xl' style={{cursor: 'pointer'}}>Icikiwir Shop</div>
+          <div className='text-white font-bold text-xl' style={{cursor: 'pointer'}}>Bughats Store</div>
         </Link>
         
         <div className="flex items-center justify-between gap-5">

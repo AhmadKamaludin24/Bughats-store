@@ -16,7 +16,7 @@ datasource db {
 
 
 model Product {
-  uuid  String  @default(cuid())
+  id  String  @default(cuid())
   name String 
   description String
   price Float
