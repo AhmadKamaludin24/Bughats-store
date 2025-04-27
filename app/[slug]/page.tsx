@@ -1,23 +1,49 @@
-import { notFound } from 'next/navigation'
+"use client"
+import React from 'react'
+
 import ProductDetail from './ProductDetail'
-import { db } from '@/lib/prisma'
+import { notFound, useParams } from 'next/navigation'
+import { Loader } from '@/components/cards/CardsProducts'
+import { ProductTypes } from '@/types/ProductTypes'
 
-// page.tsx
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
+const Page = () => {
+  const { slug } = useParams()
+  const [product, setProduct] = React.useState<ProductTypes>(null)
+  const [loading, setLoading] = React.useState(true)
 
-const Page = async ({ params }: PageProps) => {
-  // Mengambil data produk berdasarkan slug
-  const productData = await db.product.findUnique({ where: { slug: params.slug } })
+  React.useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(`/api/get-product-slug/${slug}`)
+        if(!response.ok) {
+          return notFound()
+        }
+        const data = await response.json()
+        console.log(data[0])
+        setProduct(data)
+        setLoading(false)
+      } catch (error) {
+        console.error('Error fetching product:', error)
+      } 
+    }
+    if (slug) {
+      fetchProduct()
+    }
+  }, [slug])
 
-  // Jika produk tidak ditemukan, arahkan ke halaman 404
-  if (!productData) return notFound()
+  if (loading) {
+    return (
+      <div className='w-full h-screen flex justify-center items-center'>
+          <Loader/>
+      </div>
+    )
+  }
 
-  // Kirimkan data produk ke komponen ProductDetail
-  return <ProductDetail product={productData} uuid={productData.id} />
+
+  return (
+    <ProductDetail product={product} />
+  )
 }
 
 export default Page

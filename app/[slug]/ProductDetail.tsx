@@ -7,18 +7,28 @@ import { Button } from '@/components/ui/button'
 import { useCartStore } from '@/lib/store/CartStore'
 import { ProductTypes } from '@/types/ProductTypes'
 import { formatCurrency } from '@/lib/FormatCurrency'
+import { notFound } from 'next/navigation'
 
 
 
-const ProductDetail = ({ product, uuid}: { product: ProductTypes, uuid: string }) => {
-  const [currentModel, setCurrentModel] = useState(product.model[0])
-  const productModel = product.model
+const ProductDetail = ({ product}: { product: ProductTypes }) => {
+  
+  const [currentModel, setCurrentModel] = useState(product?.model[0])
+  const productModel = product[0]?.model
   const [showDetails, setShowDetails] = useState(false)
   const {addToCart} = useCartStore((state) => state)
   const handleAddToCart = () => {
-    addToCart({ name: product.name, slug: product.slug ,description: product.description, image: product.imageUrl ,price: product.price, uuid:uuid  })
+    addToCart({ name: product.name, slug: product.slug ,description: product.description, image: product.imageUrl ,price: product.price, uuid:product.uuid  })
     alert('Added to cart!')
   }
+
+
+  if (!product) {
+    return (
+      notFound()
+    )
+  }
+  console.log(product)
 
 
   return (
@@ -40,10 +50,10 @@ const ProductDetail = ({ product, uuid}: { product: ProductTypes, uuid: string }
             
             </div>
             
-            <h1 className='text-4xl max-sm:text-2xl font-bold max-md:max-w-screen text-wrap'>{product.name}</h1>
-            <p className='text-[14px] max-h-[100px] max-sm:text-[15px] text-gray-400 overflow-y-auto max-w-fit max-sm:max-w-screen text-wrap'>{product.description}</p>
+            <h1 className='text-4xl max-sm:text-2xl font-bold max-md:max-w-screen text-wrap'>{product?.name}</h1>
+            <p className='text-[14px] max-h-[100px] max-sm:text-[15px] text-gray-400 overflow-y-auto max-w-fit max-sm:max-w-screen text-wrap'>{product?.description}</p>
             <div className="flex justify-between items-center pointer-events-auto">
-              <p className='text-lg'>Price: <span className='text-green-700'>{formatCurrency(product.price)}</span></p>
+              <p className='text-lg'>Price: <span className='text-green-700'>{formatCurrency(product?.price)}</span></p>
               <Button variant="outline" className="text-black mt-2 " onClick={ handleAddToCart}>Add to Cart</Button>
            </div>
           </div>
@@ -52,7 +62,7 @@ const ProductDetail = ({ product, uuid}: { product: ProductTypes, uuid: string }
         <Button className={`absolute min-[765px]:hidden bottom-36 z-50 w-32 border-white/20 border-2 bg-transparent ${showDetails ? "hidden" : ""} `} onClick={handleAddToCart}>Add to cart</Button>
 
         <div className="absolute sm:bottom-32 max-sm:top-32  w-full flex justify-center items-center z-50 gap-5">
-          {productModel.map((model, index) => (
+          {productModel?.map((model, index) => (
             <button key={index} className={`w-[70px] h-[70px] text-white max-sm:w-[50px]  max-sm:h-[50px] border-2 rounded-xl ${currentModel === model ? `border-white` : `border-white/20` } `} onClick={() => setCurrentModel(model)}>
               {index + 1}
             </button>

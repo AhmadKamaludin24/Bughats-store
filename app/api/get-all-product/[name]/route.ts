@@ -1,8 +1,14 @@
 import { NextResponse, NextRequest } from 'next/server';
 import {db} from '@/lib/prisma';
 
-export async function GET(request: NextRequest, {params}: {params: {name: string}}) {
-    const name =  params.name
+type Params = {
+    params: {
+      name: string
+    }
+  }
+
+export async function GET(request: NextRequest, {params}: Params) {
+    const {name} = params
    
     try {
 

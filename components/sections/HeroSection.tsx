@@ -23,7 +23,7 @@ const HeroSection = () => {
         method: 'GET',
         cache: 'no-store',
         next: {
-          revalidate: 10,
+          revalidate: 100,
         },
       });
       const data: ProductTypes[] = await res.json();

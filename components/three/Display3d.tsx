@@ -41,6 +41,10 @@ function HDRIEnvironment({ url }: { url: string }) {
 
 
 const Display3d = ({model}: {model: string}) => {
+  if (!model) {
+    return <div>No model to display</div>;  // Show a fallback when no model is available
+  }
+  console.log(model)
   return (
     <Canvas
     style={{ width: '100%', height: '100%' }}
